@@ -1,26 +1,26 @@
-# Encryption
+# التشفير
 
-- [Introduction](#introduction)
-- [Configuration](#configuration)
-- [Using The Encrypter](#using-the-encrypter)
+- [مقدمة](#مقدمة)
+- [ الضبط والاعداد](# الضبط والاعداد)
+- [استخدام التشفير](#استخدام-التشفير)
 
 <a name="introduction"></a>
-## Introduction
+## مقدمة
 
-Laravel's encryption services provide a simple, convenient interface for encrypting and decrypting text via OpenSSL using AES-256 and AES-128 encryption. All of Laravel's encrypted values are signed using a message authentication code (MAC) so that their underlying value can not be modified or tampered with once encrypted.
+توفر خدمات التشفير في Laravel واجهة بسيطة ومريحة لتشفير وفك تشفير النص عبر OpenSSL باستخدام تشفير AES-256 و AES-128. يتم توقيع جميع قيم Laravel المشفرة باستخدام رمز مصادقة الرسالة (MAC) بحيث لا يمكن تعديل قيمتها الأساسية أو العبث بها بمجرد تشفيرها.
 
 <a name="configuration"></a>
-## Configuration
+## الضبط والاعداد
 
-Before using Laravel's encrypter, you must set the `key` configuration option in your `config/app.php` configuration file. This configuration value is driven by the `APP_KEY` environment variable. You should use the `php artisan key:generate` command to generate this variable's value since the `key:generate` command will use PHP's secure random bytes generator to build a cryptographically secure key for your application. Typically, the value of the `APP_KEY` environment variable will be generated for you during [Laravel's installation](/docs/{{version}}/installation).
+قبل البدء باستخدام التشفير في Laravel, يجب عليك اولاً ضبط قيمة المفتاح `key` ضمن ملف التكوين الخاص بك أي ضمن `config/app.php`. هذه القيمة تعتمد على قيمة متغيير البيئة `APP_KEY`. يجب عليك استخدام الأمر `php artisan key:generate` حتى تولّد قيمة متغيّر البيئة هذا حيث أن الأمر `key:generate` سيستخدم منشئ البايت العشوائي الآمن (secure random bytes generator) الخاص بـ PHP لإنشاء مفتاح آمن مشفر لتطبيقك. عادةً, ما يتم توليد قيمة متغيّر البيئة `APP_KEY` الخاص بك خلال مرحلة [تثبيت Laravel]  (/docs/{{version}}/installation). 
 
 <a name="using-the-encrypter"></a>
-## Using The Encrypter
+## استخدام التشفير
 
 <a name="encrypting-a-value"></a>
-#### Encrypting A Value
+#### تشفير قيمة ما
 
-You may encrypt a value using the `encryptString` method provided by the `Crypt` facade. All encrypted values are encrypted using OpenSSL and the AES-256-CBC cipher. Furthermore, all encrypted values are signed with a message authentication code (MAC). The integrated message authentication code will prevent the decryption of any values that have been tampered with by malicious users:
+يمكنك تشفير قيمة ما باستخدام طريقة `encryptString` التي توفرها الواجهة `Crypt`. يتم تشفير جميع القيم المراد تشفيرها باستخدام تشفير OpenSSL و AES-256-CBC. علاوة على ذلك ، يتم توقيع جميع القيم المشفرة برمز مصادقة الرسالة (MAC). سيمنع رمز مصادقة الرسالة المتكاملة فك تشفير أي قيمة تم العبث بها من قبل المستخدمين الضارين (أي سوف يمنع التلاعب بالبيانات ويضمن التكامل):
 
     <?php
 
@@ -48,9 +48,9 @@ You may encrypt a value using the `encryptString` method provided by the `Crypt`
     }
 
 <a name="decrypting-a-value"></a>
-#### Decrypting A Value
+#### فك تشفير قيمة ما
 
-You may decrypt values using the `decryptString` method provided by the `Crypt` facade. If the value can not be properly decrypted, such as when the message authentication code is invalid, an `Illuminate\Contracts\Encryption\DecryptException` will be thrown:
+يمكنك فك تشفير قيمة ما باستخدام طريقة `decryptString` التي توفرها الواجهة` Crypt`. إذا تعذر فك تشفير القيمة بشكل صحيح ، كما هو الحال عندما يكون رمز مصادقة الرسالة غير صالح ، فسيتم اطلاق الاستثناء التالي `Illuminate \ Contracts \ Encryption \ DecryptException`:
 
     use Illuminate\Contracts\Encryption\DecryptException;
     use Illuminate\Support\Facades\Crypt;
