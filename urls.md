@@ -1,26 +1,26 @@
-# URL Generation
+# إنشاء عنوان URL
 
-- [Introduction](#introduction)
-- [The Basics](#the-basics)
-    - [Generating URLs](#generating-urls)
-    - [Accessing The Current URL](#accessing-the-current-url)
-- [URLs For Named Routes](#urls-for-named-routes)
-    - [Signed URLs](#signed-urls)
-- [URLs For Controller Actions](#urls-for-controller-actions)
-- [Default Values](#default-values)
+- [المقدمة](#introduction)
+- [الأساسيات](#the-basics)
+    - [إنشاء عناوين URLs](#generating-urls)
+    - [الوصول إلى عنوان URL الحالي](#accessing-the-current-url)
+- [عناوين URLs لعنوان ذو اسم](#urls-for-named-routes)
+    - [عناوين URLs ذات توقيع](#signed-urls)
+- [عناوين URLs لتوابع متحكم](#urls-for-controller-actions)
+- [القيم الافتراضية](#default-values)
 
 <a name="introduction"></a>
-## Introduction
+## المقدمة
 
-Laravel provides several helpers to assist you in generating URLs for your application. These helpers are primarily helpful when building links in your templates and API responses, or when generating redirect responses to another part of your application.
+يوفر Laravel العديد من المُساعدات لمساعدتك في إنشاء عناوين URL لتطبيقك. هؤلاء المُساعدات تفيد بشكل أساسي عند إنشاء روابط في القوالب واستجابات API ، أو عند إنشاء استجابات إعادة التوجيه إلى جزء آخر من تطبيقك.
 
 <a name="the-basics"></a>
-## The Basics
+## الأساسيات
 
 <a name="generating-urls"></a>
-### Generating URLs
+### إنشاء عناوين URLs
 
-The `url` helper may be used to generate arbitrary URLs for your application. The generated URL will automatically use the scheme (HTTP or HTTPS) and host from the current request being handled by the application:
+يمكن استخدام المساعد `url` لإنشاء عناوين URL عشوائية لتطبيقك. العنوان URL المنشئ سيستخدم بشكل تلقائي النظام (HTTP أو HTTPS) والمضيف (host) من الطلب الحالي الذي يتعامل معه التطبيق:
 
     $post = App\Models\Post::find(1);
 
@@ -29,20 +29,20 @@ The `url` helper may be used to generate arbitrary URLs for your application. Th
     // http://example.com/posts/1
 
 <a name="accessing-the-current-url"></a>
-### Accessing The Current URL
+### الوصول إلى عنوان URL الحالي
 
-If no path is provided to the `url` helper, an `Illuminate\Routing\UrlGenerator` instance is returned, allowing you to access information about the current URL:
+إذا لم يتم توفير مسار إلى المُساعد `url` ، فسيتم إرجاع نموذج ` Illuminate \ Routing \ UrlGenerator` ، مما يسمح لك بالوصول إلى معلومات حول عنوان URL الحالي:
 
-    // Get the current URL without the query string...
+    // الحصول على عنوان URL الحالي بدون الاستعلام النصي ...
     echo url()->current();
 
-    // Get the current URL including the query string...
+    // الحصول على عنوان URL الحالي متضمناً الاستعلام النصي ...
     echo url()->full();
 
-    // Get the full URL for the previous request...
+    // الحصول على عنوان URL الكامل للطلب السابق ...
     echo url()->previous();
 
-Each of these methods may also be accessed via the `URL` [facade](/docs/{{version}}/facades):
+يمكن أيضاً الوصول إلى كل طريقة من هذه الطرق عبر `URL` [facade](/docs/{{version}}/facades)
 
     use Illuminate\Support\Facades\URL;
 
