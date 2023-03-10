@@ -4,7 +4,7 @@
 - [الأساسيات](#the-basics)
     - [إنشاء عناوين URLs](#generating-urls)
     - [الوصول إلى عنوان URL الحالي](#accessing-the-current-url)
-- [عناوين URLs لعنوان ذو اسم](#urls-for-named-routes)
+- [عناوين URLs لمسار ذو اسم](#urls-for-named-routes)
     - [عناوين URLs ذات توقيع](#signed-urls)
 - [عناوين URLs لتوابع متحكم](#urls-for-controller-actions)
 - [القيم الافتراضية](#default-values)
@@ -33,13 +33,13 @@
 
 إذا لم يتم توفير مسار إلى المُساعد `url` ، فسيتم إرجاع نموذج ` Illuminate \ Routing \ UrlGenerator` ، مما يسمح لك بالوصول إلى معلومات حول عنوان URL الحالي:
 
-    // الحصول على عنوان URL الحالي بدون الاستعلام النصي ...
+    // الحصول على عنوان الحالي بدون الاستعلام النصي ...
     echo url()->current();
 
-    // الحصول على عنوان URL الحالي متضمناً الاستعلام النصي ...
+    // الحصول على عنوان الحالي متضمناً الاستعلام النصي ...
     echo url()->full();
 
-    // الحصول على عنوان URL الكامل للطلب السابق ...
+    // الحصول على عنوان الكامل للطلب السابق ...
     echo url()->previous();
 
 يمكن أيضاً الوصول إلى كل طريقة من هذه الطرق عبر `URL` [facade](/docs/{{version}}/facades)
@@ -49,21 +49,21 @@
     echo URL::current();
 
 <a name="urls-for-named-routes"></a>
-## URLs For Named Routes
+## عناوين URLs لمسار ذو اسم
 
-The `route` helper may be used to generate URLs to [named routes](/docs/{{version}}/routing#named-routes). Named routes allow you to generate URLs without being coupled to the actual URL defined on the route. Therefore, if the route's URL changes, no changes need to be made to your calls to the `route` function. For example, imagine your application contains a route defined like the following:
+يمكن استخدام المُساعد `route` لإنشاء عناوين URL إلى [المسارات المسماة] (/docs/{{version}}/routing#named-routes). تتيح لك المسارات المسماة إنشاء عناوين URL دون أن تقترن بعنوان URL الفعلي المحدد في المسار. لذلك ، إذا تغير عنوان URL للمسار ، فلا داعي لإجراء تغييرات على طلباتك على التابع `route`. على سبيل المثال ، تخيل أن التطبيق الخاص بك يحتوي على مسار محدد كما يلي:
 
     Route::get('/post/{post}', function (Post $post) {
         //
     })->name('post.show');
 
-To generate a URL to this route, you may use the `route` helper like so:
+لإنشاء عنوان URL لهذا المسار ، يمكنك استخدام المُساعد `route` كالتالي:
 
     echo route('post.show', ['post' => 1]);
 
     // http://example.com/post/1
 
-Of course, the `route` helper may also be used to generate URLs for routes with multiple parameters:
+بالطبع ، يمكن أيضًا استخدام المُساعد `route` لإنشاء عناوين URL لمسارات ذات مدخلات متعددة:
 
     Route::get('/post/{post}/comment/{comment}', function (Post $post, Comment $comment) {
         //
@@ -73,31 +73,31 @@ Of course, the `route` helper may also be used to generate URLs for routes with 
 
     // http://example.com/post/1/comment/3
 
-Any additional array elements that do not correspond to the route's definition parameters will be added to the URL's query string:
+ستتم إضافة أي عناصر مصفوفة إضافية لا تتوافق مع المدخلات المعرفة للمسار إلى الاستعلام النصي للعنوان URL:
 
     echo route('post.show', ['post' => 1, 'search' => 'rocket']);
 
     // http://example.com/post/1?search=rocket
 
 <a name="eloquent-models"></a>
-#### Eloquent Models
+#### نماذج Eloquent
 
-You will often be generating URLs using the route key (typically the primary key) of [Eloquent models](/docs/{{version}}/eloquent). For this reason, you may pass Eloquent models as parameter values. The `route` helper will automatically extract the model's route key:
+ستنشئ غالبًا عناوين URL باستخدام مفتاح المسار (عادةً المفتاح الأساسي) من [Eloquent نماذج] (/docs/{{version}}/eloquent). لهذا السبب ، يمكنك تمرير نماذج Eloquent كقيم للمدخلات. وسيقوم المُساعد `route` باستخراج مفتاح مسار النموذج تلقائيًا:
 
     echo route('post.show', ['post' => $post]);
 
 <a name="signed-urls"></a>
-### Signed URLs
+### عناوين URLs ذات توقيع
 
-Laravel allows you to easily create "signed" URLs to named routes. These URLs have a "signature" hash appended to the query string which allows Laravel to verify that the URL has not been modified since it was created. Signed URLs are especially useful for routes that are publicly accessible yet need a layer of protection against URL manipulation.
+تُتيح لك لارافل إنشاء عناوين URL "ذات توقيع" بسهولة للمسارات المسماة. تحتوي هذه العناوين URL هذه على "توقيع" مشفر ملحق بالاستعلام النصي والتي تسمح للارافل بالتحقق من أن عنوان URL لم يتم تعديله منذ أن تم إنشائه. تعد عناوين URL ذات توقيع مفيدة بشكل خاص للمسارات التي يمكن الوصول إليها بشكل عام ولكنها تحتاج إلى طبقة من الحماية ضد التلاعب بعنوان URL.
 
-For example, you might use signed URLs to implement a public "unsubscribe" link that is emailed to your customers. To create a signed URL to a named route, use the `signedRoute` method of the `URL` facade:
+على سبيل المثال ، يمكنك استخدام عناوين URL ذات توقيع لتنفيذ رابط "إلغاء اشتراك" عام يتم إرساله بالبريد الإلكتروني إلى عملائك. لإنشاء عنوان URL موقّع لمسار محدد ، استخدم الطريقة `signatureRoute` للواجهة` URL`:
 
     use Illuminate\Support\Facades\URL;
 
     return URL::signedRoute('unsubscribe', ['user' => 1]);
 
-If you would like to generate a temporary signed route URL that expires after a specified amount of time, you may use the `temporarySignedRoute` method. When Laravel validates a temporary signed route URL, it will ensure that the expiration timestamp that is encoded into the signed URL has not elapsed:
+إذا كنت ترغب في إنشاء عنوان URL مؤقت ذو توقيع ينتهي صلاحيته بعد فترة زمنية محددة ، يمكنك استخدام طريقة `temporarySignedRoute`. عندما تتحقق لارافل من صحة عنوان URL مؤقت ذو توقيع، فإنها ستضمن عدم انقضاء الوقت الزمني لانتهاء الصلاحية المشفر في عنوان URL الموقع:
 
     use Illuminate\Support\Facades\URL;
 
